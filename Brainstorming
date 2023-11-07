@@ -1,12 +1,14 @@
 # Proposed workflow:
 The overall workflow could be organized in one master script that calls separate scripts for individual tasks:
 
+1)
 ## Data Collection & Preprocessing Script
 Load MRI image data and labels into numpy arrays
 Split data into train/validation/test sets
 Extract proposed features using sklearn and imaging libraries
 Save preprocessed datasets to file
 
+2)
 ## Model Training Script
 Load preprocessed training data
 Define and train individual models (knn, logistic regression, etc) using sklearn
@@ -14,6 +16,7 @@ Evaluate each model via cross-validation
 Tune hyperparameters for each model
 Save trained models to file
 
+3)
 ## Ensemble Development Script
 Load saved trained models
 Make predictions on validation set using each model
@@ -21,6 +24,7 @@ Create ensembles using techniques like averaging, stacking
 Evaluate ensemble combinations on validation data
 Save best performing ensemble
 
+4)
 ## Evaluation Script
 Load saved ensemble model
 Make predictions on held-out test set
@@ -28,4 +32,7 @@ Evaluate performance on test data
 Generate classification report
 The master script would connect these by loading data, calling each script, saving artifacts to file, and piecing together the full pipeline. This modular approach allows separation of concerns.
 
-"I like the idea of creating seperate scripts that we can then call in a 'master' script."
+
+>>> I like the idea of creating seperate scripts that we can then call in a 'master' script.
+>>> I don't know how much compuational power we would need,but I suspect it's gong to be more than for the labs, especially if we're doing and ensemble with multiple rounds of training. 
+>>> I'm happy to do all the training on my home machine, it should be good enough. 
