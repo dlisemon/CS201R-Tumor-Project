@@ -29,3 +29,10 @@ Central repository for all project files.
       - Perfusion characteristics: Higher perfusion and neoangiogenesis occurs with higher grade tumors. Perfusion imaging features like CBV would be
         useful.
 
+## Game Plan
+- Figure out how to accelerate image CNN model
+- Save resized images
+- Save model weights
+- Use model to extract desired features from MRI images????
+- Augment features with additional generated features and compile into a csv file
+- Start working on the various ensembles to classify tumor based on augmented features
