@@ -31,8 +31,8 @@ model = Sequential([
     Conv2D(64, (3, 3), activation='relu'),
     Conv2D(32, (3, 3), activation='relu'),
     Flatten(),
-    Dense(128, activation='relu'),
-    Dense(1, activation='sigmoid')
+    Dense(128, activation='relu', name='dense_layer'),
+    Dense(1, activation='sigmoid')  
 ])
 
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])

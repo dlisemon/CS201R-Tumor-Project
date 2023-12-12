@@ -15,14 +15,17 @@ dataset = []
 
 def thread_function(start_index, end_index, file_paths, labels, desired_shape):
     logging.info("Entered thread")
-   
+
     for index in range(start_index, end_index + 1):
+        if (index == end_index):
+            break
         volume = load_nifti_file(file_paths[index])
         volume = normalize(volume)
         volume = resize_volume(volume, desired_shape)
         slices = split_into_slices(volume)
         with lock:
             dataset.extend([(slice, labels[index]) for slice in slices])
+        
     logging.info("FINISHED")
    
 
@@ -98,24 +101,26 @@ def getPathLabel(filePathName):
       labels.append(1)
 
 #add files here
-file_paths = []  # List of NIfTI file paths
-labels = []      # Corresponding labels
 
-filePathsTumor = "./tumor"
-filePathsControl = "./control"
+for i in range(1,43):
+    file_paths = []  # List of NIfTI file paths
+    labels = []      # Corresponding labels
+    formatted_number = "{:03d}".format(i)
+    filePathsTumor = "./tumor_div/" + formatted_number + "/"
+    # filePathsControl = "./control"
 
 
 
-getPathLabel(filePathsControl)
-getPathLabel(filePathsTumor)
-logging.info("Files loaded")
+    # getPathLabel(filePathsControl)
+    getPathLabel(filePathsTumor)
+    logging.info("Files loaded")
+    # print(len(file_paths))
+    # Desired shape for the CNN input
+    desired_shape = (256, 256, 1)
 
-# Desired shape for the CNN input
-desired_shape = (256, 256, 1)
+    # Preprocess the data
+    images_dataset = dataset_threading(len(file_paths), 2, file_paths, labels, desired_shape)
+    logging.info("Dataset created")
 
-# Preprocess the data
-images_dataset = dataset_threading(len(file_paths), 16, file_paths, labels, desired_shape)
-logging.info("Dataset created")
-
-with open('dataset.pkl', 'wb') as file:
-    pickle.dump(images_dataset, file)
+    with open('./dataset_div/' + formatted_number + "/" + formatted_number + '.pkl', 'wb') as file:
+        pickle.dump(images_dataset, file)

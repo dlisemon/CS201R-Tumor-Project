@@ -18,7 +18,7 @@ def create_patient(idh1_mut, co_del_19q):
     grade_probs = grade_distribution[(idh1_mut, co_del_19q)]
     grade = random.choices([1, 2, 3, 4], grade_probs)[0]  
     
-    return [idh1_mut, co_del_19q, ki67, age, gender, grade]
+    return [age, gender, ki67, grade, idh1_mut, co_del_19q]
 
 # Generate balanced dataset with random correlations       
 rows = []
@@ -27,7 +27,7 @@ for i in range(1000):
     co_del_19q = random.choice([True, False]) 
     rows.append(create_patient(idh1_mut, co_del_19q))
     
-df = pd.DataFrame(rows, columns=['idh1', 'del19q', 'ki67', 'age', 'gender', 'grade'])
+df = pd.DataFrame(rows, columns=['age', 'gender', 'ki67', 'grade', 'idh1', 'del19q' ])
 
 def save_to_csv(df, file_name):
     df.to_csv(f'{file_name}.csv', index=False)
